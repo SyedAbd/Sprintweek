@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioSource jumpSoundEffect;
 
     private float directionX = 1f;
-    [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float jumpForce = 14f;
+    [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float jumpForce = 8f;
 
     // Start is called before the first frame update
     private void Start()
