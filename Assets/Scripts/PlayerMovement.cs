@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D collide;
     private SpriteRenderer spriteRenderer;
+    [SerializeField] private string playerState = "run";
     //private Animator animator;
 
     [SerializeField] private LayerMask jumpableGround;
@@ -32,9 +33,16 @@ public class PlayerMovement : MonoBehaviour
         float velocityX = rigidBody.velocity.x;
 
         float newPosition = directionX * moveSpeed;
-        rigidBody.velocity = new Vector2(newPosition, velocityY);
+        if(playerState == "run")
+        {
+           rigidBody.velocity = new Vector2(newPosition, velocityY);
+        }
+        if (playerState == "clim")
+        {
+            rigidBody.velocity = new Vector2(0, 4);
+        }
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if ((Input.GetButtonDown("Jump") || playerState=="jump") && IsGrounded())
         {
             rigidBody.velocity = new Vector2(velocityX, jumpForce);
             //jumpSoundEffect.Play();
@@ -42,6 +50,23 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log(col.gameObject.tag + " : " + gameObject.tag + " : " + Time.time);
+        if (col.gameObject.tag == "Clim")
+        {
+            playerState = "clim";
+        }
+        else if (col.gameObject.tag == "Jump")
+        {
+            playerState = "jump";
+        }
+       //spriteMove = -0.1f;
+    }
+    void OnTriggerExit2D(Collider2D col2)
+    {
+        playerState = "run";
+    }
     private bool IsGrounded()
     {
         Bounds bounds = collide.bounds;
