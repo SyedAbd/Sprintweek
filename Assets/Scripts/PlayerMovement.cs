@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float directionX = 1f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 6f;
+    private bool dontMove = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -38,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         float newPosition = directionX * moveSpeed;
         if(playerState == "run")
         {
-            if (IsGrounded())
+            if (IsGrounded()&& !dontMove)
             {
                 rigidBody.velocity = new Vector2(newPosition, velocityY);
             }
@@ -84,7 +85,12 @@ public class PlayerMovement : MonoBehaviour
             playerState = "clim";
             animator.SetBool("IsCliming", true);
         }
-        if (col.gameObject.tag == "Afterclim")
+
+        else if (col.gameObject.tag == "DontMove")
+        {
+            dontMove = true;
+        }
+        else if (col.gameObject.tag == "Afterclim")
         {
             playerState = "afterclim";
             //animator.SetBool("IsCliming", true);
@@ -94,6 +100,13 @@ public class PlayerMovement : MonoBehaviour
         {
             playerState = "jump";
         }
+        else if (col.gameObject.tag == "Die")
+        {
+
+           // Put your code here for dying scene load
+
+
+        }
        //spriteMove = -0.1f;
     }
     void OnTriggerExit2D(Collider2D col2)
@@ -102,6 +115,10 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("IsCliming",false);
             playerState = "run";
+        }
+        if (col2.gameObject.tag == "DontMove")
+        {
+            dontMove = false;
         }
         //if(playerState== "aafterclim")
         //{
