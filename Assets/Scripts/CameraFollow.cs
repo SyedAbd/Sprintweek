@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
 {
      public float FollowSpeed = 2f;
     public float yOffset = 1f;
-    private float xOffset = 20f;
+    public float xOffset = 15f;
     public float speed = 5f;
 
     public Transform target;
