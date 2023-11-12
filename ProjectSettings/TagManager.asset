@@ -8,6 +8,7 @@ TagManager:
   - Clim
   - Afterclim
   - DontMove
+  - Die
   layers:
   - Default
   - TransparentFX

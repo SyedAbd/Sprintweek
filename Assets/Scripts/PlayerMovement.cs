@@ -62,7 +62,8 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetButtonDown("Jump") || playerState=="jump") && IsGrounded())
         {
             rigidBody.velocity = new Vector2(0, jumpForce);
-            animator.SetTrigger("IsNotGrounded");
+            for(int i = 0; i < 400; i++) { }
+            animator.SetTrigger("Jump");
             //jumpSoundEffect.Play();
         }
 
@@ -102,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (col.gameObject.tag == "Die")
         {
+            animator.Play("Player_Die");
 
            // Put your code here for dying scene load
 
