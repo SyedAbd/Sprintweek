@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetButtonDown("Jump") || playerState=="jump") && IsGrounded())
         {
             rigidBody.velocity = new Vector2(0, jumpForce);
-            for(int i = 0; i < 400; i++) { }
+            
             animator.SetTrigger("Jump");
             //jumpSoundEffect.Play();
         }
