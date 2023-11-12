@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         {
             playerState = "afterclim";
             //animator.SetBool("IsCliming", true);
-            animator.play("Player_ClimbUp")
+           // animator.play("Player_ClimbUp")
         }
         else if (col.gameObject.tag == "Jump")
         {
