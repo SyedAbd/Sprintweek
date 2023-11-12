@@ -38,12 +38,25 @@ public class PlayerMovement : MonoBehaviour
         float newPosition = directionX * moveSpeed;
         if(playerState == "run")
         {
-           rigidBody.velocity = new Vector2(newPosition, velocityY);
+            if (IsGrounded())
+            {
+                rigidBody.velocity = new Vector2(newPosition, velocityY);
+            }
+           
         }
         if (playerState == "clim")
         {
-            rigidBody.velocity = new Vector2(0, 4);
+            animator.SetBool("IsCliming", true);
+            rigidBody.velocity = new Vector2(0, 2);
+            
+
         }
+        //if(playerState == "afterclim"|| playerState == "aafterclim")
+        //{
+
+        //    rigidBody.velocity = new Vector2(0, 6);
+        //   // playerState = "aafterclim";
+        //}
 
         if ((Input.GetButtonDown("Jump") || playerState=="jump") && IsGrounded())
         {
@@ -69,6 +82,13 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.tag == "Clim")
         {
             playerState = "clim";
+            animator.SetBool("IsCliming", true);
+        }
+        if (col.gameObject.tag == "Afterclim")
+        {
+            playerState = "afterclim";
+            //animator.SetBool("IsCliming", true);
+            animator.play("Player_ClimbUp")
         }
         else if (col.gameObject.tag == "Jump")
         {
@@ -78,7 +98,18 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D col2)
     {
-        playerState = "run";
+        if(playerState == "clim")
+        {
+            animator.SetBool("IsCliming",false);
+            playerState = "run";
+        }
+        //if(playerState== "aafterclim")
+        //{
+        //    playerState = "run";
+
+        //}
+
+
     }
     private bool IsGrounded()
     {
