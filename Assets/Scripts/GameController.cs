@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -11,13 +12,13 @@ public class GameController : MonoBehaviour
     private float _score = 0;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             CheckPaused();
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour
         UpdateScore();
     }
 
-    void CheckPaused()
+    private void CheckPaused()
     {
         if (!_isPaused)
         {
@@ -41,9 +42,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void UpdateScore()
+    private void UpdateScore()
     {
         _score += Time.deltaTime;
         timeText.text = "Time: " + (int)_score;
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }

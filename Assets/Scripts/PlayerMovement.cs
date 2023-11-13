@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
     private CapsuleCollider2D collide;
-    private SpriteRenderer spriteRenderer;
     [SerializeField] private string playerState = "run";
 
     private Animator animator;
@@ -27,9 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         collide = GetComponent<CapsuleCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        //animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -38,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         float velocityY = rigidBody.velocity.y;
         float velocityX = rigidBody.velocity.x;
 
-        Debug.Log("current velocity" + velocityY);
+        //Debug.Log("current velocity" + velocityY);
 
         float newPosition = directionX * moveSpeed;
         if (playerState == "run")
@@ -71,8 +68,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger("IsNotGrounded");
         }
 
-        if (velocityY < -.1f && playerState == "jump")
-            animator.SetBool("IsFalling", true);
+        //if (velocityY < -.1f && playerState == "jump")
+        //    animator.SetBool("IsFalling", true);
 
     }
 
@@ -93,14 +90,14 @@ public class PlayerMovement : MonoBehaviour
         {
             playerState = "jump";
         }
-        else if (col.gameObject.tag == "Die")
-        {
-            animator.Play("Player_Die");
+        //else if (col.gameObject.tag == "Die")
+        //{
+        //    animator.Play("Player_Die");
 
-            // Put your code here for dying scene load
+        //    // Put your code here for dying scene load
 
 
-        }
+        //}
         //spriteMove = -0.1f;
     }
     private void OnTriggerExit2D(Collider2D col2)
