@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
     private Animator animator;
-    [SerializeField] private SceneController sceneController;
 
     private void Start()
     {
@@ -22,8 +22,16 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        GameObject gameObject = collision.gameObject;
+        if (gameObject.CompareTag("MainCamera")) {
+            animator.Play("Player_Die");
+        }
+    }
+
     private void InitDeathScreen()
     {
-        sceneController.ChangeScene(1);
+        SceneManager.LoadScene(2);
     }
 }
