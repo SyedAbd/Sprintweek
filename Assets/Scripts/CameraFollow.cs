@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -24,4 +25,17 @@ public class CameraFollow : MonoBehaviour
         Vector3 newPos = new Vector3(target.position.x + xOffset, target.position.y + yOffset, -10f);
         transform.position = Vector3.Slerp(transform.position, newPos, FollowSpeed * Time.deltaTime);
     }
+
+    void OnTriggerExit2D(Collider2D collision) {
+        if (collision.CompareTag("Player"))
+        {
+            SceneManager.LoadScene(1);
+        }
+
+
+
+
+    }
+
+
 }
