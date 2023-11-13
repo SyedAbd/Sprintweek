@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [SerializeField] private string playerState = "run";
     Animator animator;
-   
+
     //private Animator animator;
+    private bool climFlage = false;
 
     [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private AudioSource jumpSoundEffect;
@@ -47,8 +48,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if (playerState == "clim")
         {
-            animator.SetBool("IsCliming", true);
-            rigidBody.velocity = new Vector2(0, 2);
+            if(Input.GetKeyDown(KeyCode.C) || climFlage)
+            {
+                climFlage=true;
+                animator.SetBool("IsCliming", true);
+                rigidBody.velocity = new Vector2(0, 2);
+            }
+            
             
 
         }
@@ -84,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.tag == "Clim")
         {
             playerState = "clim";
-            animator.SetBool("IsCliming", true);
+            //animator.SetBool("IsCliming", true);
         }
 
         else if (col.gameObject.tag == "DontMove")
@@ -117,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("IsCliming",false);
             playerState = "run";
+            climFlage = false;
         }
         if (col2.gameObject.tag == "DontMove")
         {
