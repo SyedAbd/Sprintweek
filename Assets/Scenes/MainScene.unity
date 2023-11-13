@@ -614,10 +614,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985402d2221b5ac44be5047f926df4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowSpeed: 3
+  FollowSpeed: 2
   yOffset: 2.4
   xOffset: 6
-  speed: 2
+  speed: 1
   target: {fileID: 661951216}
 --- !u!114 &519420034
 MonoBehaviour:
