@@ -47,11 +47,13 @@ public class CameraFollow : MonoBehaviour
         return transform.position.x + speed;
     }
 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            SceneManager.LoadScene(1);
-        }
-    }
+    //void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Player"))
+    //    {
+    //        GameObject player = collision.gameObject;
+    //        player.GetComponent<PlayerLife>().
+    //        SceneManager.LoadScene(1);
+    //    }
+    //}
 }
