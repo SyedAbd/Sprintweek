@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 public class CameraFollow : MonoBehaviour
 {
     public float FollowSpeed = 2f;
-    public float yOffset = 2.7f;
+    public float yOffset = 2.4f;
     public float xOffset = 6f;
-    public float speed = 1.5f;
+    public float speed = 1f;
 
     public Transform target;
 
