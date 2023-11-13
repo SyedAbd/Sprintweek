@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool("IsCliming", true);
                 rigidBody.velocity = new Vector2(0, climbingForce);
             }
-            
+            //else playerState = "run";
         }
 
 
@@ -127,7 +127,9 @@ public class PlayerMovement : MonoBehaviour
         //spriteMove = -0.1f;
     }
     private void OnTriggerExit2D(Collider2D col2)
+
     {
+        if(playerState == "clim" && climFlag == false && col2.gameObject.tag == "Clim") playerState = "run";
         if (playerState == "clim" && col2.gameObject.tag == "Clim")
         {
             
