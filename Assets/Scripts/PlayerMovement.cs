@@ -8,14 +8,19 @@ public class PlayerMovement : MonoBehaviour
     private CapsuleCollider2D collide;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private string playerState = "run";
-    //private Animator animator;
+
+    private Animator animator;
 
     [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private AudioSource jumpSoundEffect;
 
     private float directionX = 1f;
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float jumpForce = 8f;
+    private float climbingForce = 2f;
+
+    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float jumpForce = 4f;
+
+    private bool dontMove = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -23,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         collide = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         //animator = GetComponent<Animator>();
     }
 
@@ -32,44 +38,96 @@ public class PlayerMovement : MonoBehaviour
         float velocityY = rigidBody.velocity.y;
         float velocityX = rigidBody.velocity.x;
 
+        Debug.Log("current velocity" + velocityY);
+
         float newPosition = directionX * moveSpeed;
-        if(playerState == "run")
-        {
-           rigidBody.velocity = new Vector2(newPosition, velocityY);
-        }
+        if (playerState == "run")
+            if (IsGrounded() && !dontMove)
+            {
+                rigidBody.velocity = new Vector2(newPosition, velocityY);
+            }
+
+
         if (playerState == "clim")
         {
-            rigidBody.velocity = new Vector2(0, 4);
+            rigidBody.velocity = new Vector2(0, climbingForce);
         }
 
-        if ((Input.GetButtonDown("Jump") || playerState=="jump") && IsGrounded())
+
+        if ((Input.GetButtonDown("Jump") || playerState == "jump") && IsGrounded())
         {
-            rigidBody.velocity = new Vector2(velocityX, jumpForce);
+            rigidBody.velocity = new Vector2(0, jumpForce);
+
+            animator.SetTrigger("Jump");
             //jumpSoundEffect.Play();
         }
 
+        if (IsGrounded())
+        {
+            animator.SetTrigger("IsGrounded");
+        }
+        else
+        {
+            animator.SetTrigger("IsNotGrounded");
+        }
+
+        if (velocityY < -.1f && playerState == "jump")
+            animator.SetBool("IsFalling", true);
+
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(col.gameObject.tag + " : " + gameObject.tag + " : " + Time.time);
         if (col.gameObject.tag == "Clim")
         {
             playerState = "clim";
+            animator.SetBool("IsCliming", true);
         }
+
+        else if (col.gameObject.tag == "DontMove")
+        {
+            dontMove = true;
+        }
+        
         else if (col.gameObject.tag == "Jump")
         {
             playerState = "jump";
         }
-       //spriteMove = -0.1f;
+        else if (col.gameObject.tag == "Die")
+        {
+            animator.Play("Player_Die");
+
+            // Put your code here for dying scene load
+
+
+        }
+        //spriteMove = -0.1f;
     }
-    void OnTriggerExit2D(Collider2D col2)
+    private void OnTriggerExit2D(Collider2D col2)
     {
-        playerState = "run";
+        if (playerState == "clim" && col2.gameObject.tag == "Clim")
+        {
+            animator.SetBool("IsCliming", false);
+            animator.SetBool("IsAfterClimb", true);
+            climbingForce = 1.8f;
+
+        }
+        if (col2.gameObject.tag == "DontMove")
+        {
+            dontMove = false;
+        }
     }
     private bool IsGrounded()
     {
         Bounds bounds = collide.bounds;
         return Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+    }
+
+    private void ClimbUp()
+    {
+        playerState = "run";
+        rigidBody.velocity = new Vector2(1, 1);
+        animator.SetBool("IsAfterClimb", false);
+        climbingForce = 2f;
     }
 }

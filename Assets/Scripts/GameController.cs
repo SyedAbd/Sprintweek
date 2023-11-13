@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
     public GameObject pausePanel;

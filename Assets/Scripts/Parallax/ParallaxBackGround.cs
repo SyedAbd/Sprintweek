@@ -9,12 +9,6 @@ public class ParallaxBrackGround : MonoBehaviour
     [SerializeField] private ParallaxCamera parallaxCamera;
     private List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
 
-    //[SerializeField] GameObject prefab;
-    [SerializeField] private float parallaxOffset = 30;
-
-    //private bool isInstanciated;
-    //private float length, startPos;
-
     private void Start()
     {
         if (parallaxCamera == null)
@@ -28,20 +22,6 @@ public class ParallaxBrackGround : MonoBehaviour
         //startPos = transform.position.x;
     }
 
-    //private void FixedUpdate()
-    //{
-    //    float defPosition = startPos + length;
-    //    float cameraTrackPosition = parallaxCamera.transform.position.x + parallaxOffset;
-    //    if (cameraTrackPosition > defPosition && !isInstanciated)
-    //    {
-    //        Transform pTransform = transform.parent;
-    //        GameObject item = Instantiate(prefab, new Vector3(cameraTrackPosition, transform.position.y, transform.position.z), Quaternion.identity);
-    //        item.name = "BackGround";
-    //        item.transform.SetParent(pTransform);
-    //        isInstanciated = true;
-    //    }
-    //}
-
     private void SetLayers()
     {
         parallaxLayers.Clear();
@@ -52,9 +32,6 @@ public class ParallaxBrackGround : MonoBehaviour
 
             if (layer != null)
             {
-                //length = layer.GetLength();
-
-                //layer.name = "Layer-" + i;
                 parallaxLayers.Add(layer);
             }
         }

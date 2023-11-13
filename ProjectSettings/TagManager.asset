@@ -4,8 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Ground
   - Clim
-  - Jump
+  - Afterclim
+  - DontMove
+  - Die
   layers:
   - Default
   - TransparentFX
