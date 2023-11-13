@@ -19,7 +19,7 @@ public class ItemCollector : MonoBehaviour
             Destroy(obj);
             sprayCount++;
 
-            sprayText.text = "Sprays: " + sprayCount;
+            sprayText.text = "Spray Count: " + sprayCount;
         }
     }
 }
