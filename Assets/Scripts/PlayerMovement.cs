@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private string playerState = "run";
 
     private Animator animator;
-
+    private bool climAvailable = false;
+    private bool climFlag = false;
     [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private AudioSource jumpSoundEffect;
 
@@ -37,18 +38,42 @@ public class PlayerMovement : MonoBehaviour
 
         //Debug.Log("current velocity" + velocityY);
 
+
+        if(Input.GetKeyDown(KeyCode.V)&& IsGrounded())
+        {
+
+            animator.Play("Player_Roll");
+
+
+        }
+
+
+
+
         float newPosition = directionX * moveSpeed;
         if (playerState == "run")
             if (IsGrounded() && !dontMove)
             {
                 rigidBody.velocity = new Vector2(newPosition, velocityY);
             }
-
+        
 
         if (playerState == "clim")
         {
-            rigidBody.velocity = new Vector2(0, climbingForce);
+            if (climFlag)
+            {
+                rigidBody.velocity = new Vector2(0, climbingForce);
+
+            }
+            else if (Input.GetKeyDown(KeyCode.C))
+            {
+                climFlag = true;
+                animator.SetBool("IsCliming", true);
+                rigidBody.velocity = new Vector2(0, climbingForce);
+            }
+            
         }
+
 
 
         if ((Input.GetButtonDown("Jump") || playerState == "jump") && IsGrounded())
@@ -77,8 +102,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.tag == "Clim")
         {
+            //climAvailable = true;
             playerState = "clim";
-            animator.SetBool("IsCliming", true);
+            //animator.SetBool("IsCliming", true);
         }
 
         else if (col.gameObject.tag == "DontMove")
@@ -104,9 +130,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerState == "clim" && col2.gameObject.tag == "Clim")
         {
+            
             animator.SetBool("IsCliming", false);
             animator.SetBool("IsAfterClimb", true);
             climbingForce = 1.8f;
+            
 
         }
         if (col2.gameObject.tag == "DontMove")
@@ -125,6 +153,7 @@ public class PlayerMovement : MonoBehaviour
         playerState = "run";
         rigidBody.velocity = new Vector2(1, 1);
         animator.SetBool("IsAfterClimb", false);
+        climFlag = false;
         climbingForce = 2f;
     }
 }
