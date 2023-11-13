@@ -35,9 +35,14 @@ public class CameraFollow : MonoBehaviour
 
     private float GetX()
     {
-        if ((transform.position.x + speed) < target.position.x)
+        float retNum = transform.position.x + speed;
+        if (retNum < target.position.x)
         {
-            return transform.position.x + speed + 0.1f;
+            return retNum + 0.6f;
+        }
+        else if(retNum > target.position.x)
+        {
+            return retNum - 0.1f;
         }
         return transform.position.x + speed;
     }
