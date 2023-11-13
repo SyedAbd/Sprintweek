@@ -9,6 +9,7 @@ TagManager:
   - Afterclim
   - DontMove
   - Die
+  - Spray
   layers:
   - Default
   - TransparentFX
