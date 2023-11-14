@@ -32,6 +32,6 @@ public class PlayerLife : MonoBehaviour
 
     private void InitDeathScreen()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 }

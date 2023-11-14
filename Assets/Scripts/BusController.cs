@@ -36,6 +36,6 @@ public class BusController : MonoBehaviour
         yield return new WaitForSeconds(checkoutSeconds);
 
         Debug.Log("check here");
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }
